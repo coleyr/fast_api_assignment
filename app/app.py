@@ -9,9 +9,9 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from pydantic import BaseModel
 import logging
 
-#Setup logging for application
+# Setup logging for application
 format = "%(asctime)s %(name)10s %(levelname)8s: %(message)s"
-logfile="api_activity.log"
+logfile = "api_activity.log"
 logging.basicConfig(format=format, level=logging.DEBUG,
                     datefmt='%Y-%m-%d,%H:%M:%S', filename=logfile)
 
@@ -21,14 +21,17 @@ class post_call(BaseModel):
     '''Looks for url in json param and is used for post request'''
     url: str  # A url string for a get request
 
-#Instatiate class instance of FastApi
+
+# Instatiate class instance of FastApi
 app = FastAPI()
-#Set header dict to be used by all requests
+# Set header dict to be used by all requests
 headers = {"Accept": "application/json"}
-#Use regex to validate url's submitted in /ping post requests
+# Use regex to validate url's submitted in /ping post requests
 valid_html_regex = re.compile(
     r"https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)")
-def validate_http(url:str) -> bool:
+
+
+def validate_http(url: str) -> bool:
     '''
 Returns a boolean, True if the str provided is a valid url.
 
@@ -43,7 +46,9 @@ Returns a boolean, True if the str provided is a valid url.
         logging.info(f"Invalid http request detected in url provided: {url}")
     return valid
 
-#Custom Error handling....mhmmmm donuts
+# Custom Error handling....mhmmmm donuts
+
+
 @app.exception_handler(StarletteHTTPException)
 async def custom_http_exception_handler(request: Request, exc: HTTPException):
     '''
@@ -59,7 +64,9 @@ async def custom_http_exception_handler(request: Request, exc: HTTPException):
     logging.warning(f"Doh! An HTTP error!: {repr(exc)}")
     return await http_exception_handler(request, exc)
 
-#Custom Error handling, with a concise message for our use case
+# Custom Error handling, with a concise message for our use case
+
+
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
     '''
@@ -79,7 +86,9 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
         content=jsonable_encoder(output),
     )
 
-#Route decorator and function for info, returns a static dict
+# Route decorator and function for info, returns a static dict
+
+
 @app.get("/info")
 async def info():
     '''
@@ -92,7 +101,9 @@ async def info():
     '''
     return {"Receiver": "Cisco is the best!"}
 
-#Route decorator and function for root, returns a static dict
+# Route decorator and function for root, returns a static dict
+
+
 @app.get("/")
 async def root():
     '''
@@ -105,7 +116,9 @@ async def root():
     '''
     return {"message": "FastApi for interview"}
 
-#Helper function for calling the request library, all request exceptions included
+# Helper function for calling the request library, all request exceptions included
+
+
 def call_url(url: str) -> requests.Response | requests.RequestException:
     '''
 Returns a request response in a json formated dict.
@@ -123,10 +136,12 @@ Returns a request response in a json formated dict.
     except requests.exceptions.RequestException as e:
         logging.warning(f"call to {url} failed")
         return {'exception': e}
-    
-#Post function for route ping, calls body url if body url present
+
+# Post function for route ping, calls body url if body url present
+
+
 @app.post("/ping")
-async def ping(body: post_call) -> requests.Response|dict:
+async def ping(body: post_call) -> requests.Response | dict:
     '''
     Takes the json body from a post and searchs for an url attribute:
     Returns a request response in a json formated dict. Checks for valid url.
@@ -145,9 +160,11 @@ async def ping(body: post_call) -> requests.Response|dict:
         }
     )
 
-#Just a bit of fun, a static call to get a random chuck norris joke
+# Just a bit of fun, a static call to get a random chuck norris joke
+
+
 @app.get("/chuck")
-async def get_chuck() -> requests.Response|dict:
+async def get_chuck() -> requests.Response | dict:
     '''
     Returns a request response in a json formated dict from a call to a 
     Chuck Norris joke api https://api.chucknorris.io/jokes/random
@@ -160,9 +177,11 @@ async def get_chuck() -> requests.Response|dict:
     '''
     return call_url("https://api.chucknorris.io/jokes/random")
 
-#Just a bit of fun, a static call to get a random simpsons quote
+# Just a bit of fun, a static call to get a random simpsons quote
+
+
 @app.get("/simpsons_quote")
-async def get_simpsons_quote() -> requests.Response|dict:
+async def get_simpsons_quote() -> requests.Response | dict:
     '''
     Returns a request response in a json formated dict from a call to a 
     simpsons quote api https://thesimpsonsquoteapi.glitch.me/quotes
@@ -175,9 +194,11 @@ async def get_simpsons_quote() -> requests.Response|dict:
     '''
     return call_url("https://thesimpsonsquoteapi.glitch.me/quotes")
 
-#Just a bit of fun, a static call to get a random dad joke api
+# Just a bit of fun, a static call to get a random dad joke api
+
+
 @app.get("/dad_joke")
-async def get_dad_joke() -> requests.Response|dict:
+async def get_dad_joke() -> requests.Response | dict:
     '''
     Returns a request response in a json formated dict from a call to a 
     dad joke api https://icanhazdadjoke.com/

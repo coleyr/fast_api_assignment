@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  api:
+    restart: always
+    build: ./
+    image: fastapi
+    ports:
+      - "9000"
+    networks:
+      - main
+    volumes:
+      - ./app:/usr/src/app/
+    env_file: .env
+    environment:
+      - DEBUG=true
+    command: ["run"]
+  nginx:
+    restart: always
+    build: ./nginx
+    image: nginx
+    networks:
+      - main
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - web-certs:/etc/nginx/ssl/certs/
+    environment:
+      - host=api
+networks:
+  main:
+
+volumes:
+  web-certs:
+

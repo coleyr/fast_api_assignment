@@ -17,7 +17,7 @@ logging.basicConfig(format=format, level=logging.DEBUG,
 
 
 # Instatiate model for request proxy
-class post_call(BaseModel):
+class PostCall(BaseModel):
     '''Looks for url in json param and is used for post request'''
     url: str  # A url string for a get request
 
@@ -141,13 +141,13 @@ Returns a request response in a json formated dict.
 
 
 @app.post("/ping")
-async def ping(body: post_call) -> requests.Response | dict:
+async def ping(body: PostCall) -> requests.Response | dict:
     '''
     Takes the json body from a post and searchs for an url attribute:
     Returns a request response in a json formated dict. Checks for valid url.
 
         Parameters:
-                body (post_call): A post_call model object
+                body (PostCall): A PostCall model object
 
         Returns:
                 reponse (dict): A request reponse object formatted as a json dict

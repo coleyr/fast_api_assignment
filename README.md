@@ -1,22 +1,20 @@
 # fast_api_assignment
 A fast API application to fulfill the prompt for the upcoming interview
 
-## Table of Contents
-
-| Title | Description |
-| --- | --- |
-| Synopsis | Brief Overview |
-| Live links | Links to test the end product on a live box |
-| Install Instructions | An Overview of the install process using and the install methods |
-| API reference | An API reference to aide in use of the tool |
+# Table of Contents
+1. [Synopsis](#Synopsis)
+2. [Live Demo](#Live_Links)
+3. [Install Instructions](#Install)
+4. [API Path Table](#API)
 
 
-## Synopsis - an api built with fastapi to respond to certain api calls and demonstrate the use of a python web framework.
+## Synopsis
+### an api built with fastapi to respond to certain api calls and demonstrate the use of a python web framework.
 
-# Live demo ip:
+# Live_Links
 ### View the documentation
-    https://174.129.182.47/docs
-    https://174.129.182.47/redoc
+1. [API documentation](https://174.129.182.47/docs) (api swagger documentation)
+2. [API documentation](https://174.129.182.47/redoc) (api redoc documentation)
 ### Test the API
     GET 174.129.182.47/ 
 
@@ -99,8 +97,8 @@ A fast API application to fulfill the prompt for the upcoming interview
 | GET | [/simpsons_quote](#getsimpsons_quote) | Get Simpsons Quote |
 | GET | [/dad_joke](#getdad_joke) | Get Dad Joke |
 
+# API
 ## API Reference Table
-
 | Name | Path | Description |
 | --- | --- | --- |
 | HTTPValidationError | [#/components/schemas/HTTPValidationError](#componentsschemashttpvalidationerror) |  |

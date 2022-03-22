@@ -1,5 +1,4 @@
 import re
-import sys
 import requests
 from fastapi import FastAPI, HTTPException, Request, status
 from fastapi.exceptions import RequestValidationError
